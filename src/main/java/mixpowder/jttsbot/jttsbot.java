@@ -40,7 +40,6 @@ import net.dv8tion.jda.api.managers.AudioManager;
 
 
 public class jttsbot extends ListenerAdapter{
-	public static JDA jda;
 	private AudioPlayerManager playerManager;
 	private AudioManager audioManager;
 	private AudioPlayer player;
@@ -50,7 +49,7 @@ public class jttsbot extends ListenerAdapter{
 	private TextChannel channel;
 
 	public static void main(String[] args) {
-		jda = Bot();
+		 Bot();
 	}
 
 	public jttsbot(){
@@ -66,7 +65,7 @@ public class jttsbot extends ListenerAdapter{
 	@SuppressWarnings("deprecation")
 	public static JDA Bot(){
 		jttsbot main = new jttsbot();
-		jda = null;
+		JDA jda = null;
 		CommandClientBuilder cc = new CommandClientBuilder()
 				.addCommands(new StartCommand(main),new StopCommand(main),new ShutdownCommand(main))
 				.setPrefix(node.get("SetPrefix").textValue())

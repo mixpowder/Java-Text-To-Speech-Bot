@@ -18,16 +18,20 @@ public class StartCommand extends Command{
 
 	@Override
 	protected void execute(CommandEvent e) {
-		if(!(e.getMember().getVoiceState().getChannel() == null) && this.main.start == false){
-			e.getGuild().getAudioManager().setSendingHandler(new AudioPlayerSendHandler(this.main.player()));
-			this.main.setAudioManager(e.getGuild().getAudioManager());
-			this.main.audioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
-			this.main.player().setVolume(10);
-			this.main.start = true;
-			this.main.textChannel(e.getTextChannel());
-			e.reply("読み上げを開始します");
+		if(!(e.getMember().getVoiceState().getChannel() == null)){
+			if(this.main.start == false){
+				e.getGuild().getAudioManager().setSendingHandler(new AudioPlayerSendHandler(this.main.player()));
+				this.main.setAudioManager(e.getGuild().getAudioManager());
+				this.main.audioManager().openAudioConnection(e.getMember().getVoiceState().getChannel());
+				this.main.player().setVolume(10);
+				this.main.start = true;
+				this.main.textChannel(e.getTextChannel());
+				e.reply(e.getChannel().getName() + "内のテキストの読み上げを開始します");
+			}else{
+				e.reply("すでに読み上げを開始しています");
+			}
 		}else{
-			e.reply("すでに読み上げを開始しています");
+			e.reply("ボイスチャンネルに参加した後に実行してください");
 		}
 	}
 }

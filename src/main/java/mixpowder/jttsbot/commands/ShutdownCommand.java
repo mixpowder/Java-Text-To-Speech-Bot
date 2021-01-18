@@ -17,6 +17,6 @@ public class ShutdownCommand extends Command{
 
 	@Override
 	protected void execute(CommandEvent e) {
-		this.main.jda.shutdown();
+		e.getJDA().shutdown();
 	}
 }
