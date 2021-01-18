@@ -29,9 +29,8 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import mixpowder.jttsbot.commands.ShutdownCommand;
 import mixpowder.jttsbot.commands.StartCommand;
 import mixpowder.jttsbot.commands.StopCommand;
-import mixpowder.jttsbot.gui.ErrorFrame;
+import mixpowder.jttsbot.gui.SetFrame;
 import mixpowder.jttsbot.main.TrackScheduler;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -49,7 +48,9 @@ public class jttsbot extends ListenerAdapter{
 	private TextChannel channel;
 
 	public static void main(String[] args) {
-		 Bot();
+		 if(Bot() == true){
+			 new SetFrame("成功","起動に成功しました",100,80);
+		 }
 	}
 
 	public jttsbot(){
@@ -63,22 +64,22 @@ public class jttsbot extends ListenerAdapter{
 	}
 
 	@SuppressWarnings("deprecation")
-	public static JDA Bot(){
+	public static boolean Bot(){
 		jttsbot main = new jttsbot();
-		JDA jda = null;
 		CommandClientBuilder cc = new CommandClientBuilder()
 				.addCommands(new StartCommand(main),new StopCommand(main),new ShutdownCommand(main))
 				.setPrefix(node.get("SetPrefix").textValue())
 				.setOwnerId(node.get("OwnerID").textValue());
 		try {
-			jda = (new JDABuilder())
+			(new JDABuilder())
 					.setToken(node.get("BotToken").textValue())
 					.addEventListeners(main,cc.build())
 					.build();
 		} catch (LoginException e) {
-			new ErrorFrame("BotTokenを正しく入力して下さい 内容: " + e.getMessage());
+			new SetFrame("エラー","BotTokenを正しく入力して下さい 内容: " + e.getMessage(),495,80);
+			return false;
 		}
-		return jda;
+		return true;
 	}
 
 	@Override
